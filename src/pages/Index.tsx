@@ -305,7 +305,64 @@ const typeLabels: Record<string, string> = {
   game: "Игра", break: "Перерыв", award: "Награждение",
 };
 
-const tabs = ["Сценарий открытия", "Станции", "Расписание", "Закрытие и награждение"];
+const goalData = {
+  goal: "Воспитание у детей дошкольного возраста любви к Родине, уважения к защитникам Отечества и чувства гордости за свою страну через участие в командной военно-патриотической игре.",
+  tasks: [
+    {
+      category: "Воспитательные",
+      color: "#d4a017",
+      emoji: "🎖️",
+      items: [
+        "Формировать чувство патриотизма, гражданственности и любви к Родине",
+        "Воспитывать уважение к профессии военного, к подвигу защитников Отечества",
+        "Развивать нравственные качества: ответственность, взаимовыручку, честность",
+        "Укреплять командный дух и чувство единства со своим коллективом",
+      ],
+    },
+    {
+      category: "Развивающие",
+      color: "#2e6db4",
+      emoji: "🧠",
+      items: [
+        "Развивать физическую выносливость, ловкость, координацию движений",
+        "Тренировать внимательность, наблюдательность и быстроту реакции",
+        "Формировать умение действовать в команде, слушать и выполнять команды",
+        "Расширять знания детей о военных профессиях и основах безопасности",
+      ],
+    },
+    {
+      category: "Образовательные",
+      color: "#4a7c24",
+      emoji: "📚",
+      items: [
+        "Познакомить детей с элементами военно-прикладных видов спорта (в игровой форме)",
+        "Закрепить навыки оказания элементарной первой помощи",
+        "Формировать начальные представления об ориентировании и разведке",
+        "Обогащать словарный запас военной и патриотической тематики",
+      ],
+    },
+    {
+      category: "Организационные",
+      color: "#8e44ad",
+      emoji: "📋",
+      items: [
+        "Создать праздничную торжественную атмосферу для детей и педагогического коллектива",
+        "Обеспечить участие всех 8 групп детского сада в едином мероприятии",
+        "Провести мероприятие в соответствии с требованиями безопасности",
+        "Дать каждому ребёнку возможность почувствовать себя победителем",
+      ],
+    },
+  ],
+  expectedResults: [
+    "Каждый ребёнок получает опыт командной работы и поддержки товарища",
+    "Дети знакомятся с понятиями «Родина», «защитник», «долг» в игровой форме",
+    "Формируется позитивный образ военной профессии без агрессии и страха",
+    "Педагоги получают готовый инструмент патриотического воспитания",
+    "Создаются яркие воспоминания и эмоциональная связь с темой патриотизма",
+  ],
+};
+
+const tabs = ["Цель и задачи", "Сценарий открытия", "Станции", "Расписание", "Закрытие и награждение"];
 
 // ─── КОМПОНЕНТ ──────────────────────────────────────────────────────────────
 
@@ -373,10 +430,61 @@ export default function Index() {
 
       <main className="max-w-6xl mx-auto px-4 py-8">
 
-        {/* ══════════════════════════════════════
-            ТАБ 0: СЦЕНАРИЙ (ОТКРЫТИЕ / ЗАКРЫТИЕ)
-            ══════════════════════════════════════ */}
+        {/* ══════════════════════
+            ТАБ 0: ЦЕЛЬ И ЗАДАЧИ
+            ══════════════════════ */}
         {activeTab === 0 && (
+          <div className="space-y-8">
+            {/* Цель */}
+            <div className="p-6 rounded-xl" style={{ background: "linear-gradient(135deg, rgba(212,160,23,0.1), rgba(212,160,23,0.05))", border: "1px solid rgba(212,160,23,0.3)" }}>
+              <p className="font-oswald text-xs tracking-[0.3em] uppercase mb-3" style={{ color: "#d4a017" }}>⭐ Цель игры</p>
+              <p className="text-lg leading-relaxed" style={{ color: "#e8dcc8" }}>{goalData.goal}</p>
+            </div>
+
+            {/* Задачи по категориям */}
+            <div>
+              <h2 className="font-oswald text-xl tracking-wide mb-5" style={{ color: "#e8dcc8" }}>ЗАДАЧИ ИГРЫ</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {goalData.tasks.map((block, i) => (
+                  <div key={i} className="p-5 rounded-xl"
+                    style={{ background: `${block.color}0e`, border: `1px solid ${block.color}30` }}>
+                    <div className="flex items-center gap-2 mb-4">
+                      <span className="text-xl">{block.emoji}</span>
+                      <span className="font-oswald text-sm uppercase tracking-widest" style={{ color: block.color }}>{block.category}</span>
+                    </div>
+                    <ul className="space-y-2.5">
+                      {block.items.map((item, j) => (
+                        <li key={j} className="flex items-start gap-3 text-sm" style={{ color: "#e8dcc8" }}>
+                          <span className="w-5 h-5 rounded flex items-center justify-center flex-shrink-0 mt-0.5 font-oswald text-xs font-bold"
+                            style={{ background: `${block.color}25`, color: block.color }}>{j + 1}</span>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Ожидаемые результаты */}
+            <div className="p-5 rounded-xl" style={{ background: "rgba(74,124,36,0.08)", border: "1px solid rgba(74,124,36,0.25)" }}>
+              <h3 className="font-oswald text-sm uppercase tracking-widest mb-4" style={{ color: "#4a7c24" }}>Ожидаемые результаты</h3>
+              <div className="space-y-2.5">
+                {goalData.expectedResults.map((result, i) => (
+                  <div key={i} className="flex items-start gap-3 text-sm" style={{ color: "#e8dcc8" }}>
+                    <Icon name="CheckCircle" size={16} className="flex-shrink-0 mt-0.5" style={{ color: "#4a7c24" }} />
+                    {result}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ══════════════════════════════════════
+            ТАБ 1: СЦЕНАРИЙ (ОТКРЫТИЕ / ЗАКРЫТИЕ)
+            ══════════════════════════════════════ */}
+        {activeTab === 1 && (
           <div>
             {/* Переключатель */}
             <div className="flex items-center justify-between mb-6">
@@ -430,7 +538,7 @@ export default function Index() {
         {/* ══════════════════════
             ТАБ 1: СТАНЦИИ
             ══════════════════════ */}
-        {activeTab === 1 && (
+        {activeTab === 2 && (
           <div>
             <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
               <h2 className="font-oswald text-xl tracking-wide" style={{ color: "#e8dcc8" }}>6 СТАНЦИЙ ИГРЫ</h2>
@@ -551,9 +659,9 @@ export default function Index() {
         )}
 
         {/* ══════════════════════
-            ТАБ 2: РАСПИСАНИЕ
+            ТАБ 3: РАСПИСАНИЕ
             ══════════════════════ */}
-        {activeTab === 2 && (
+        {activeTab === 3 && (
           <div className="space-y-8">
             <div>
               <h2 className="font-oswald text-xl tracking-wide mb-6" style={{ color: "#e8dcc8" }}>ВРЕМЕННА́Я СЕТКА</h2>
@@ -631,9 +739,9 @@ export default function Index() {
         )}
 
         {/* ══════════════════════════════
-            ТАБ 3: ЗАКРЫТИЕ И НАГРАЖДЕНИЕ
+            ТАБ 4: ЗАКРЫТИЕ И НАГРАЖДЕНИЕ
             ══════════════════════════════ */}
-        {activeTab === 3 && (
+        {activeTab === 4 && (
           <div className="space-y-8">
             {/* Сценарий закрытия */}
             <div>
